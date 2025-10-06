@@ -1,16 +1,18 @@
-# Use a tiny, production-ready web server image
 FROM nginx:alpine
 
-# Remove default site
+# optional: clean default site
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy your static files into the web root
+# your static files
 COPY index.html /usr/share/nginx/html/
 COPY styles.css /usr/share/nginx/html/
 COPY script.js /usr/share/nginx/html/
 
-# Expose web port
-EXPOSE 80
+# hand nginx a template that expands ${PORT} at startup
+COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 
-# Optional: simple healthcheck
-HEALTHCHECK CMD wget -qO- http://localhost/ || exit 1
+# hint a default; Railway will override PORT at runtime
+ENV PORT=8080
+EXPOSE 8080
+
+# use image's default entrypoint (it auto envsubst's templates) + CMD

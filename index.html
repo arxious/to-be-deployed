@@ -5,44 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>arxious</title>
   <meta name="description" content="Arman's developer portfolio — sleek, fast, and minimal." />
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <meta name="theme-color" content="#0b0d10" />
+
+  <!-- Favicon: robust set + cache-busting + fallbacks -->
+  <!-- Primary multi-res .ico (works on all desktop browsers) -->
+  <link id="favicon-ico" rel="icon" href="/favicon.ico?v=1" sizes="any" type="image/x-icon" />
+  <link rel="shortcut icon" href="/favicon.ico?v=1" type="image/x-icon" />
+  <!-- PNG variants for high-DPI + Android -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=1" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=1" />
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1" />
+
   <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap" rel="stylesheet">
-  
-  <style>
-    /*
-      Railway-inspired aesthetic:
-      - Dark, neutral base with subtle gradients
-      - Soft glass surfaces with 12–16px radius
-      - Crisp Inter typography
-      - Gentle motion & focus rings
-      - "Card" layout with grid & consistent spacing
-    */
 
+  <style>
     :root {
       --bg: #0b0d10;
       --panel: rgba(255,255,255,0.04);
-      --elevated: rgba(255,255,255,0.06);
       --text: #e6e9ef;
       --muted: #9aa4b2;
       --brand-1: #7c3aed; /* violet */
       --brand-2: #22d3ee; /* cyan */
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
       --ring: rgba(34, 211, 238, 0.45);
       --radius: 16px;
-      --radius-sm: 12px;
       --shadow-1: 0 6px 20px rgba(0,0,0,0.35);
       --shadow-2: 0 12px 40px rgba(0,0,0,0.45);
-    }
-
-    @media (prefers-color-scheme: light) {
-      :root { /* Keep brand vibe even in light mode */
-        --bg: #0b0d10; /* force dark aesthetic */
-      }
     }
 
     * { box-sizing: border-box; }
@@ -59,18 +50,11 @@
       line-height: 1.6;
     }
 
-    .container {
-      width: min(1120px, 92vw);
-      margin: 0 auto;
-    }
+    .container { width: min(1120px, 92vw); margin: 0 auto; }
 
-    /* Top navigation */
-    .nav {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: saturate(140%) blur(10px);
-      background: linear-gradient(to bottom, rgba(11,13,16,0.9), rgba(11,13,16,0.6));
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(140%) blur(10px);
+      background: linear-gradient(to bottom, rgba(11,13,16,0.9), rgba(11,13,16,0.6)); border-bottom: 1px solid rgba(255,255,255,0.06); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.2px; }
     .brand .dot { width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--brand-1), var(--brand-2)); box-shadow: 0 0 18px rgba(34,211,238,0.5); }
@@ -78,90 +62,46 @@
     .nav a:hover { color: var(--text); }
     .nav-links { display: flex; gap: 18px; align-items: center; }
 
-    /* Buttons */
-    .btn {
-      appearance: none; border: 0; cursor: pointer;
-      padding: 10px 14px; border-radius: 12px; font-weight: 600; 
-      color: #0b0d10; background: linear-gradient(135deg, var(--brand-2), var(--brand-1));
-      transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
-      box-shadow: 0 6px 20px rgba(124,58,237,0.35);
-    }
+    .btn { appearance: none; border: 0; cursor: pointer; padding: 10px 14px; border-radius: 12px; font-weight: 600;
+      color: #0b0d10; background: linear-gradient(135deg, var(--brand-2), var(--brand-1)); transition: transform .15s ease, box-shadow .2s ease, filter .2s ease; box-shadow: 0 6px 20px rgba(124,58,237,0.35); }
     .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
     .btn:active { transform: translateY(0); filter: brightness(0.98); }
-    .btn.ghost {
-      color: var(--text); background: transparent; border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: none;
-    }
+    .btn.ghost { color: var(--text); background: transparent; border: 1px solid rgba(255,255,255,0.12); box-shadow: none; }
 
-    /* Hero */
-    .hero { padding: 48px 0 24px; position: relative; }
-    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: center; }
+    /* Sections */
+    .hero { padding: 48px 0 24px; }
+    .hero-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 28px; align-items: center; }
     .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 600; font-size: 13px; letter-spacing: 0.4px; text-transform: uppercase; }
-    .eyebrow .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--brand-2); box-shadow: 0 0 0 0 rgba(34,211,238,0.6); animation: pulse 2.4s infinite; }
+    .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--brand-2); box-shadow: 0 0 0 0 rgba(34,211,238,0.6); animation: pulse 2.4s infinite; }
     @keyframes pulse { to { box-shadow: 0 0 0 16px rgba(34,211,238,0); } }
 
-    h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.04; margin: 10px 0 14px; letter-spacing: -0.02em; }
-    .lead { font-size: clamp(16px, 1.6vw, 18px); color: var(--muted); margin-bottom: 22px; }
-
-    .hero-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius);
-      padding: 18px; box-shadow: var(--shadow-1);
-    }
-
-    .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
-    .kpi { background: var(--panel); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; }
-    .kpi .label { color: var(--muted); font-size: 12px; }
-    .kpi .value { font-size: 20px; font-weight: 700; }
-
-    /* Section */
     .section { padding: 28px 0 18px; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
     .section h2 { margin: 0; font-size: 20px; letter-spacing: 0.2px; }
     .muted { color: var(--muted); }
 
-    /* Cards grid */
     .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
     .col-4 { grid-column: span 4; }
     .col-6 { grid-column: span 6; }
-    .card {
-      position: relative;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-1);
-      padding: 18px; min-height: 150px; overflow: clip;
-      transition: transform .18s ease, box-shadow .2s ease, border-color .18s ease;
-    }
-    .card::before { /* subtle top gradient line */
-      content: ""; position: absolute; inset: 0 0 auto 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--brand-2), var(--brand-1), transparent);
-      opacity: .4;
-    }
+
+    .card { position: relative; background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius); box-shadow: var(--shadow-1); padding: 18px; min-height: 120px; overflow: clip; transition: transform .18s ease, box-shadow .2s ease, border-color .18s ease; }
+    .card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(90deg, transparent, var(--brand-2), var(--brand-1), transparent); opacity: .4; }
     .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); border-color: rgba(255,255,255,0.18); }
 
-    .card .title { font-weight: 700; margin: 2px 0 6px; }
-    .card .desc { color: var(--muted); font-size: 14px; }
+    .title { font-weight: 700; margin: 2px 0 6px; }
+    .desc { color: var(--muted); font-size: 14px; }
 
-    .tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(124,58,237,0.15); color: #e9d5ff; border: 1px solid rgba(124,58,237,0.35); padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-
-    .code-chip { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--panel); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 10px; font-size: 13px; color: #cbd5e1; }
-
-    /* Footer */
     footer { padding: 32px 0 64px; color: var(--muted); }
     .footer-grid { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; }
 
-    /* Utilities */
-    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .spacer { height: 24px; }
-    .divider { height: 1px; background: rgba(255,255,255,0.08); border: 0; margin: 18px 0; }
+    /* Admin panel */
+    .admin-wrap { max-width: 820px; margin: 0 auto; }
+    .field { display: grid; grid-template-columns: 180px 1fr; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .field input, .field textarea, .field select { padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); color: var(--text); }
+    .hint { color: var(--muted); font-size: 12px; margin-top: 6px; }
 
-    /* Responsive */
-    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 850px) { .col-6 { grid-column: span 12; } .col-4 { grid-column: span 12; } }
-
-    /* Focus ring */
+    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .field { grid-template-columns: 1fr; } }
     :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 10px; }
   </style>
 </head>
@@ -171,183 +111,224 @@
     <div class="container nav-inner">
       <div class="brand">
         <span class="dot" aria-hidden="true"></span>
-        <a href="#" aria-label="arxious.dev home" style="color: var(--text); text-decoration: none;">arxious.dev</a>
+        <a href="#/" aria-label="arxious.dev home" style="color: var(--text); text-decoration: none;">arxious.dev</a>
       </div>
       <div class="nav-links">
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#contact">Contact</a>
-        <button class="btn ghost" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Top</button>
+        <a href="#/projects">Projects</a>
+        <a href="#/experience">Experience</a>
+        <a href="#/contact">Contact</a>
+        <a class="btn ghost" href="#/admin" title="Admin portal">Admin</a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="eyebrow"><span class="pulse"></span> Developer • Security-minded • Builder</span>
-        <!-- Intro headline removed per request -->
-        <!-- Lead paragraph removed per request -->
-        <div class="row">
-          <a class="btn" href="#projects">View Projects</a>
-          <a class="btn ghost" href="#contact">Get in touch</a>
-          <span class="code-chip">docker build -t arxious.dev .</span>
-        </div>
-
-        <div class="kpis">
-          <div class="kpi"><div class="label">Deployed</div><div class="value">Oct 2025</div></div>
-          <div class="kpi"><div class="label">Stack</div><div class="value">Docker • Nginx • Railway</div></div>
-          <div class="kpi"><div class="label">Focus</div><div class="value">Security • DX</div></div>
-        </div>
-      </div>
-
-      <aside class="hero-card" aria-label="Status">
-        <div class="row" style="justify-content: space-between;">
-          <div class="tag">● Online</div>
-          <span class="muted">arxious.dev</span>
-        </div>
-        <hr class="divider" />
-        <div class="row" style="justify-content: space-between;">
-          <div>
-            <div class="muted" style="font-size:12px;">Uptime (last 30d)</div>
-            <div class="title">99.98%</div>
-          </div>
-          <div>
-            <div class="muted" style="font-size:12px;">Avg. Latency</div>
-            <div class="title">48 ms</div>
-          </div>
-        </div>
-        <hr class="divider" />
-        <div class="row" style="justify-content: space-between;">
-          <div class="muted">Latest Deploy</div>
-          <div class="code-chip">railway up</div>
-        </div>
-      </aside>
-    </div>
-  </header>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Projects</h2>
-        <p class="muted">A few things I'm proud of.</p>
-      </div>
-
-      <div class="grid">
-        <article class="card col-6">
-          <div class="title">Personal Portfolio</div>
-          <p class="desc">Dockerized static site served with Nginx and deployed to Railway with custom domain & automated SSL.</p>
-          <div class="spacer"></div>
-          <div class="row">
-            <span class="code-chip">Docker</span>
-            <span class="code-chip">Nginx</span>
-            <span class="code-chip">Railway</span>
-          </div>
-        </article>
-
-        <article class="card col-6">
-          <div class="title">Secure Notes API</div>
-          <p class="desc">Small Go service with JWT auth, rate limiting, and basic OWASP mitigations. Container-first workflow.</p>
-          <div class="spacer"></div>
-          <div class="row">
-            <span class="code-chip">Go</span>
-            <span class="code-chip">Postgres</span>
-            <span class="code-chip">Docker</span>
-          </div>
-        </article>
-
-        <article class="card col-4">
-          <div class="title">CTF Toolbox</div>
-          <p class="desc">CLI helpers for quick hashing, encoding, and pattern finding. Packaged in a single binary.</p>
-          <div class="spacer"></div>
-          <div class="row">
-            <span class="code-chip">Python</span>
-            <span class="code-chip">CLI</span>
-          </div>
-        </article>
-
-        <article class="card col-4">
-          <div class="title">Infra Monitor</div>
-          <p class="desc">Lightweight uptime/latency checks with a minimal dashboard and webhooks.</p>
-          <div class="spacer"></div>
-          <div class="row">
-            <span class="code-chip">Node</span>
-            <span class="code-chip">Webhooks</span>
-          </div>
-        </article>
-
-        <article class="card col-4">
-          <div class="title">Portfolio v1</div>
-          <p class="desc">The early build — refactored into the current sleek version.</p>
-          <div class="spacer"></div>
-          <div class="row">
-            <span class="code-chip">HTML</span>
-            <span class="code-chip">CSS</span>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Experience</h2>
-        <p class="muted">What I've been up to.</p>
-      </div>
-
-      <div class="grid">
-        <article class="card col-6">
-          <div class="row" style="justify-content: space-between;">
-            <div class="title">Freelance Web Dev</div>
-            <span class="muted">2024 — Present</span>
-          </div>
-          <p class="desc">Designed and deployed small business sites with focus on performance, SEO, and easy updates.</p>
-        </article>
-        <article class="card col-6">
-          <div class="row" style="justify-content: space-between;">
-            <div class="title">Student Projects</div>
-            <span class="muted">CS @ College</span>
-          </div>
-          <p class="desc">Exploring cybersecurity, Docker, and cloud infra through hands-on builds.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Contact</h2>
-        <p class="muted">Say hello — I'm open to collabs and internships.</p>
-      </div>
-      <div class="card">
-        <form class="row" onsubmit="event.preventDefault(); alert('Thanks! I\'ll get back to you.');">
-          <input aria-label="Email" type="email" placeholder="you@domain.com" required style="flex:1; min-width: 220px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); color: var(--text);" />
-          <input aria-label="Subject" type="text" placeholder="Subject" required style="flex:1; min-width: 200px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); color: var(--text);" />
-          <button class="btn" type="submit">Send</button>
-        </form>
-      </div>
-    </div>
-  </section>
+  <!-- MAIN (client-side routes) -->
+  <main id="app"></main>
 
   <footer>
     <div class="container footer-grid">
       <div>© <span id="y"></span> arxious.dev — Built with ♥ and Docker</div>
       <div class="row">
-        <a class="muted" href="#">GitHub</a>
+        <a class="muted" href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
         <a class="muted" href="#">LinkedIn</a>
-        <a class="muted" href="#">Email</a>
+        <a class="muted" href="#/contact">Email</a>
       </div>
     </div>
   </footer>
 
   <script>
+    // Simple client-side router using hash (#/...) so it works on static hosting
+    const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; };
+
+    const state = {
+      cfg: JSON.parse(localStorage.getItem('arx_cfg') || '{}')
+    };
+
+    function saveCfg() { localStorage.setItem('arx_cfg', JSON.stringify(state.cfg)); }
+
+    // Favicon management: attempt PNG first if provided, fall back to ICO
+    function setFavicon(url) {
+      const head = document.head;
+      // remove existing icons
+      head.querySelectorAll('link[rel*="icon"]').forEach(n => n.parentNode.removeChild(n));
+      // add new
+      const link = document.createElement('link');
+      link.rel = 'icon';
+      link.href = url + (url.includes('?') ? '' : '?v=' + Date.now()); // cache-bust
+      head.appendChild(link);
+    }
+
+    function ensureFavicon() {
+      const override = state.cfg.faviconUrl;
+      if (override) {
+        const testImg = new Image();
+        testImg.onload = () => setFavicon(override);
+        testImg.onerror = () => setFavicon('/favicon.ico');
+        testImg.src = override;
+      }
+    }
+
+    function Home() {
+      const tagline = state.cfg.tagline || 'Developer • Security‑minded • Builder';
+      const showGradients = state.cfg.gradients !== false;
+      if (!showGradients) {
+        document.body.style.background = 'var(--bg)';
+      } else {
+        document.body.style.background = '';
+      }
+      const node = el(`
+        <div>
+          <header class="hero">
+            <div class="container hero-grid">
+              <div>
+                <span class="eyebrow"><span class="pulse"></span> ${tagline}</span>
+                <div class="row" style="margin-top:12px;">
+                  <a class="btn" href="#/projects">View Projects</a>
+                  <a class="btn ghost" href="#/contact">Get in touch</a>
+                  <span class="code-chip">docker build -t arxious.dev .</span>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <section id="projects" class="section">
+            <div class="container">
+              <div class="section-header">
+                <h2>Projects</h2>
+                <p class="muted">A few things I'm proud of.</p>
+              </div>
+
+              <div class="grid">
+                <article class="card col-6">
+                  <div class="title">Personal Portfolio</div>
+                  <p class="desc">Dockerized static site with Nginx on Railway, custom domain & SSL.</p>
+                  <div class="spacer"></div>
+                  <div class="row">
+                    <span class="code-chip">Docker</span>
+                    <span class="code-chip">Nginx</span>
+                    <span class="code-chip">Railway</span>
+                  </div>
+                </article>
+
+                <article class="card col-6">
+                  <div class="title">Secure Notes API</div>
+                  <p class="desc">Go service with JWT auth & rate limiting. Container-first workflow.</p>
+                  <div class="spacer"></div>
+                  <div class="row">
+                    <span class="code-chip">Go</span>
+                    <span class="code-chip">Postgres</span>
+                    <span class="code-chip">Docker</span>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="contact" class="section">
+            <div class="container">
+              <div class="section-header">
+                <h2>Contact</h2>
+                <p class="muted">Say hello — I'm open to collabs and internships.</p>
+              </div>
+              <div class="card">
+                <form class="row" onsubmit="event.preventDefault(); alert('Thanks! I\\'ll get back to you.');">
+                  <input aria-label="Email" type="email" placeholder="you@domain.com" required style="flex:1; min-width: 220px;" />
+                  <input aria-label="Subject" type="text" placeholder="Subject" required style="flex:1; min-width: 200px;" />
+                  <button class="btn" type="submit">Send</button>
+                </form>
+              </div>
+            </div>
+          </section>
+        </div>
+      `);
+      return node;
+    }
+
+    function Admin() {
+      const node = el(`
+        <div class="section">
+          <div class="container admin-wrap">
+            <div class="section-header">
+              <h2>Admin Portal</h2>
+              <p class="muted">Tweak site UI and favicon. Settings are saved in your browser (localStorage).</p>
+            </div>
+
+            <div class="card">
+              <div class="field">
+                <label for="tagline">Tagline</label>
+                <input id="tagline" type="text" placeholder="Developer • Security‑minded • Builder" value="${state.cfg.tagline || ''}">
+              </div>
+
+              <div class="field">
+                <label for="gradients">Background</label>
+                <select id="gradients">
+                  <option value="on" ${state.cfg.gradients !== false ? 'selected' : ''}>Gradients On</option>
+                  <option value="off" ${state.cfg.gradients === false ? 'selected' : ''}>Solid Dark</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="favicon">Favicon URL</label>
+                <input id="favicon" type="url" placeholder="/favicon.ico or /favicon-32.png" value="${state.cfg.faviconUrl || ''}">
+                <div class="hint">Paste a full URL or a path. We'll try it, and fall back to /favicon.ico if it fails.</div>
+              </div>
+
+              <div class="row" style="justify-content:flex-end; gap:8px; margin-top:12px;">
+                <button class="btn ghost" id="testFav">Test Favicon</button>
+                <button class="btn" id="saveCfg">Save Settings</button>
+              </div>
+            </div>
+
+            <div class="hint" style="margin-top:10px;">
+              Tip: If your favicon doesn't show, browsers may cache it aggressively. Try changing the URL (e.g. add ?v=2) or clear cache.
+            </div>
+          </div>
+        </div>
+      `);
+
+      node.querySelector('#saveCfg').addEventListener('click', () => {
+        state.cfg.tagline = node.querySelector('#tagline').value.trim() || undefined;
+        state.cfg.gradients = node.querySelector('#gradients').value === 'on';
+        state.cfg.faviconUrl = node.querySelector('#favicon').value.trim() || undefined;
+        saveCfg();
+        ensureFavicon();
+        location.hash = '#/';
+        render();
+      });
+
+      node.querySelector('#testFav').addEventListener('click', () => {
+        const u = node.querySelector('#favicon').value.trim();
+        if (u) { setFavicon(u); }
+      });
+
+      return node;
+    }
+
+    function NotFound() {
+      return el('<div class="container section"><p class="muted">Page not found.</p></div>');
+    }
+
+    function route() {
+      const hash = location.hash.replace(/^#\/?/, '');
+      if (!hash || hash === '') return { view: Home };
+      if (hash.startsWith('admin')) return { view: Admin };
+      if (hash.startsWith('projects') || hash.startsWith('experience') || hash.startsWith('contact')) return { view: Home };
+      return { view: NotFound };
+    }
+
+    function render() {
+      const root = document.getElementById('app');
+      root.innerHTML = '';
+      const { view } = route();
+      root.appendChild(view());
+    }
+
+    window.addEventListener('hashchange', render);
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Initial render + favicon enforcement
+    render();
+    ensureFavicon();
   </script>
 </body>
 </html>

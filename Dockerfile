@@ -5,7 +5,6 @@ RUN rm -rf /usr/share/nginx/html/*
 
 # your static files
 COPY index.html /usr/share/nginx/html/
-COPY styles.css /usr/share/nginx/html/
 COPY script.js /usr/share/nginx/html/
 
 # hand nginx a template that expands ${PORT} at startup

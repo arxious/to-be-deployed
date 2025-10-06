@@ -1,49 +1,352 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>sir yes sir</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <title>arxious.dev — Portfolio</title>
+  <meta name="description" content="Arman's developer portfolio — sleek, fast, and minimal." />
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&display=swap" rel="stylesheet">
+  
+  <style>
+    /*
+      Railway-inspired aesthetic:
+      - Dark, neutral base with subtle gradients
+      - Soft glass surfaces with 12–16px radius
+      - Crisp Inter typography
+      - Gentle motion & focus rings
+      - "Card" layout with grid & consistent spacing
+    */
+
+    :root {
+      --bg: #0b0d10;
+      --panel: rgba(255,255,255,0.04);
+      --elevated: rgba(255,255,255,0.06);
+      --text: #e6e9ef;
+      --muted: #9aa4b2;
+      --brand-1: #7c3aed; /* violet */
+      --brand-2: #22d3ee; /* cyan */
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --ring: rgba(34, 211, 238, 0.45);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --shadow-1: 0 6px 20px rgba(0,0,0,0.35);
+      --shadow-2: 0 12px 40px rgba(0,0,0,0.45);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root { /* Keep brand vibe even in light mode */
+        --bg: #0b0d10; /* force dark aesthetic */
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(124,58,237,0.14), transparent 55%),
+                  radial-gradient(1000px 700px at -10% 10%, rgba(34,211,238,0.12), transparent 60%),
+                  var(--bg);
+      background-attachment: fixed;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+    }
+
+    /* Top navigation */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: linear-gradient(to bottom, rgba(11,13,16,0.9), rgba(11,13,16,0.6));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.2px; }
+    .brand .dot { width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--brand-1), var(--brand-2)); box-shadow: 0 0 18px rgba(34,211,238,0.5); }
+    .nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
+    .nav a:hover { color: var(--text); }
+    .nav-links { display: flex; gap: 18px; align-items: center; }
+
+    /* Buttons */
+    .btn {
+      appearance: none; border: 0; cursor: pointer;
+      padding: 10px 14px; border-radius: 12px; font-weight: 600; 
+      color: #0b0d10; background: linear-gradient(135deg, var(--brand-2), var(--brand-1));
+      transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+      box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    .btn:active { transform: translateY(0); filter: brightness(0.98); }
+    .btn.ghost {
+      color: var(--text); background: transparent; border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: none;
+    }
+
+    /* Hero */
+    .hero { padding: 48px 0 24px; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 600; font-size: 13px; letter-spacing: 0.4px; text-transform: uppercase; }
+    .eyebrow .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--brand-2); box-shadow: 0 0 0 0 rgba(34,211,238,0.6); animation: pulse 2.4s infinite; }
+    @keyframes pulse { to { box-shadow: 0 0 0 16px rgba(34,211,238,0); } }
+
+    h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.04; margin: 10px 0 14px; letter-spacing: -0.02em; }
+    .lead { font-size: clamp(16px, 1.6vw, 18px); color: var(--muted); margin-bottom: 22px; }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 18px; box-shadow: var(--shadow-1);
+    }
+
+    .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .kpi { background: var(--panel); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; }
+    .kpi .label { color: var(--muted); font-size: 12px; }
+    .kpi .value { font-size: 20px; font-weight: 700; }
+
+    /* Section */
+    .section { padding: 28px 0 18px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .section h2 { margin: 0; font-size: 20px; letter-spacing: 0.2px; }
+    .muted { color: var(--muted); }
+
+    /* Cards grid */
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-1);
+      padding: 18px; min-height: 150px; overflow: clip;
+      transition: transform .18s ease, box-shadow .2s ease, border-color .18s ease;
+    }
+    .card::before { /* subtle top gradient line */
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brand-2), var(--brand-1), transparent);
+      opacity: .4;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); border-color: rgba(255,255,255,0.18); }
+
+    .card .title { font-weight: 700; margin: 2px 0 6px; }
+    .card .desc { color: var(--muted); font-size: 14px; }
+
+    .tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(124,58,237,0.15); color: #e9d5ff; border: 1px solid rgba(124,58,237,0.35); padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+
+    .code-chip { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--panel); border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 10px; font-size: 13px; color: #cbd5e1; }
+
+    /* Footer */
+    footer { padding: 32px 0 64px; color: var(--muted); }
+    .footer-grid { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; }
+
+    /* Utilities */
+    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .spacer { height: 24px; }
+    .divider { height: 1px; background: rgba(255,255,255,0.08); border: 0; margin: 18px 0; }
+
+    /* Responsive */
+    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 850px) { .col-6 { grid-column: span 12; } .col-4 { grid-column: span 12; } }
+
+    /* Focus ring */
+    :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 10px; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Arman Jadoon</h1>
-    <p>Developer • Designer • Tinkerer</p>
-    <nav>
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <a href="#" aria-label="arxious.dev home" style="color: var(--text); text-decoration: none;">arxious.dev</a>
+      </div>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+        <button class="btn ghost" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Top</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow"><span class="pulse"></span> Developer • Security-minded • Builder</span>
+        <!-- Intro headline removed per request -->
+        <!-- Lead paragraph removed per request -->
+        <div class="row">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn ghost" href="#contact">Get in touch</a>
+          <span class="code-chip">docker build -t arxious.dev .</span>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi"><div class="label">Deployed</div><div class="value">Oct 2025</div></div>
+          <div class="kpi"><div class="label">Stack</div><div class="value">Docker • Nginx • Railway</div></div>
+          <div class="kpi"><div class="label">Focus</div><div class="value">Security • DX</div></div>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Status">
+        <div class="row" style="justify-content: space-between;">
+          <div class="tag">● Online</div>
+          <span class="muted">arxious.dev</span>
+        </div>
+        <hr class="divider" />
+        <div class="row" style="justify-content: space-between;">
+          <div>
+            <div class="muted" style="font-size:12px;">Uptime (last 30d)</div>
+            <div class="title">99.98%</div>
+          </div>
+          <div>
+            <div class="muted" style="font-size:12px;">Avg. Latency</div>
+            <div class="title">48 ms</div>
+          </div>
+        </div>
+        <hr class="divider" />
+        <div class="row" style="justify-content: space-between;">
+          <div class="muted">Latest Deploy</div>
+          <div class="code-chip">railway up</div>
+        </div>
+      </aside>
+    </div>
   </header>
 
-  <main>
-    <section id="work">
-      <h2>Projects</h2>
-      <ul class="grid">
-        <li>
-          <h3>Cool Project</h3>
-          <p>One-liner about what it does and why it’s neat.</p>
-          <a target="_blank" href="#">View</a>
-        </li>
-        <!-- add more cards -->
-      </ul>
-    </section>
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Projects</h2>
+        <p class="muted">A few things I'm proud of.</p>
+      </div>
 
-    <section id="about">
-      <h2>About</h2>
-      <p>Short bio + skills.</p>
-    </section>
+      <div class="grid">
+        <article class="card col-6">
+          <div class="title">Personal Portfolio</div>
+          <p class="desc">Dockerized static site served with Nginx and deployed to Railway with custom domain & automated SSL.</p>
+          <div class="spacer"></div>
+          <div class="row">
+            <span class="code-chip">Docker</span>
+            <span class="code-chip">Nginx</span>
+            <span class="code-chip">Railway</span>
+          </div>
+        </article>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p><a href="mailto:you@example.com">you@example.com</a> ·
-         <a target="_blank" href="https://github.com/yourhandle">GitHub</a> ·
-         <a target="_blank" href="https://linkedin.com/in/yourhandle">LinkedIn</a></p>
-    </section>
-  </main>
+        <article class="card col-6">
+          <div class="title">Secure Notes API</div>
+          <p class="desc">Small Go service with JWT auth, rate limiting, and basic OWASP mitigations. Container-first workflow.</p>
+          <div class="spacer"></div>
+          <div class="row">
+            <span class="code-chip">Go</span>
+            <span class="code-chip">Postgres</span>
+            <span class="code-chip">Docker</span>
+          </div>
+        </article>
 
-  <footer>© <span id="y"></span> Your Name</footer>
-  <script src="/script.js"></script>
+        <article class="card col-4">
+          <div class="title">CTF Toolbox</div>
+          <p class="desc">CLI helpers for quick hashing, encoding, and pattern finding. Packaged in a single binary.</p>
+          <div class="spacer"></div>
+          <div class="row">
+            <span class="code-chip">Python</span>
+            <span class="code-chip">CLI</span>
+          </div>
+        </article>
+
+        <article class="card col-4">
+          <div class="title">Infra Monitor</div>
+          <p class="desc">Lightweight uptime/latency checks with a minimal dashboard and webhooks.</p>
+          <div class="spacer"></div>
+          <div class="row">
+            <span class="code-chip">Node</span>
+            <span class="code-chip">Webhooks</span>
+          </div>
+        </article>
+
+        <article class="card col-4">
+          <div class="title">Portfolio v1</div>
+          <p class="desc">The early build — refactored into the current sleek version.</p>
+          <div class="spacer"></div>
+          <div class="row">
+            <span class="code-chip">HTML</span>
+            <span class="code-chip">CSS</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Experience</h2>
+        <p class="muted">What I've been up to.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card col-6">
+          <div class="row" style="justify-content: space-between;">
+            <div class="title">Freelance Web Dev</div>
+            <span class="muted">2024 — Present</span>
+          </div>
+          <p class="desc">Designed and deployed small business sites with focus on performance, SEO, and easy updates.</p>
+        </article>
+        <article class="card col-6">
+          <div class="row" style="justify-content: space-between;">
+            <div class="title">Student Projects</div>
+            <span class="muted">CS @ College</span>
+          </div>
+          <p class="desc">Exploring cybersecurity, Docker, and cloud infra through hands-on builds.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Contact</h2>
+        <p class="muted">Say hello — I'm open to collabs and internships.</p>
+      </div>
+      <div class="card">
+        <form class="row" onsubmit="event.preventDefault(); alert('Thanks! I\'ll get back to you.');">
+          <input aria-label="Email" type="email" placeholder="you@domain.com" required style="flex:1; min-width: 220px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); color: var(--text);" />
+          <input aria-label="Subject" type="text" placeholder="Subject" required style="flex:1; min-width: 200px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); color: var(--text);" />
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>© <span id="y"></span> arxious.dev — Built with ♥ and Docker</div>
+      <div class="row">
+        <a class="muted" href="#">GitHub</a>
+        <a class="muted" href="#">LinkedIn</a>
+        <a class="muted" href="#">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

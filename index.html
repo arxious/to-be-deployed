@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arxious</title>
-
-    <style> /* Styles section */
+    <style>
         body {
             text-align: center;
             background: linear-gradient(120deg, #232526 0%, #414345 50%, #e6f36e 100%);
@@ -15,24 +14,51 @@
             backdrop-filter: blur(2px);
         }
         h1 {
-        text-align: center;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            margin: 40px auto 0 auto;
+            width: fit-content;
+        }
+        .form-title-outer {
+            font-size: 1.1em;
+            color: #e6f36e;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: 0;
+            margin-left: 8px;
+            margin-top: 0;
+        }
+        .form-title-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 8px 0 0 16px;
+            font-size: 1.1em;
+            color: #e6f36e;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: left;
+        }
         form {
             background: rgba(65, 67, 69, 0.7);
-            display: inline-block;
+            display: block;
             padding: 24px 320px;
             border-radius: 16px;
-            margin-top: 32px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.15);
             border: 1px dashed yellow;
+            position: relative; /* Needed for absolute positioning inside */
+            /* Optional: set a fixed width */
+            /* width: 400px; */
         }
-
         form div {
             margin-bottom: 16px;
         }
-
         label {
             display: block;
             margin-bottom: 6px;
@@ -41,7 +67,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             letter-spacing: 1px;
         }
-
         input[type="text"],
         input[type="password"] {
             width: 220px;
@@ -52,7 +77,6 @@
             background: transparent;
             color: antiquewhite;
         }
-
         button {
             padding: 12px 32px;
             font-size: 1.1em;
@@ -64,27 +88,33 @@
             cursor: pointer;
             transition: transform 0.2s, background 0.2s;
         }
+        button:hover {
+            transform: scale(1.08);
+            background: #fff86e;
+        }
     </style>
-
 </head>
 <body>
     <h1>Welcome back</h1>
     What are you waiting for?
     <br>
-    <form method="POST" action="\login">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <br>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <br>
-        <div>
-            <button type="submit">Access Systems</button>
-        </div>
-    </form>
+    <div class="form-container">
+        <form method="POST" action="\login">
+            <div class="form-title-inner">
+                arxious systems v1.1
+            </div>
+            <div style="margin-top: 40px;">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <button type="submit">Access Systems</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

@@ -12,8 +12,7 @@
             color: #fff;
             min-height: 100vh;
             margin: 0;
-            /* Optional: add a slight blur to the background */
-            /* backdrop-filter: blur(2px); */
+            backdrop-filter: blur(2px);
         }
         h1 {
         text-align: center;
@@ -25,5 +24,19 @@
 <body>
     <h1>Is this something to fear?</h1>
     Is this something to be afraid of?
+
+    <form method="POST" action="\login">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <br>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <br>
+        <button type="submit">Log In</button>
+    </form>
 </body>
 </html>
